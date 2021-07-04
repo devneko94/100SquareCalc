@@ -54,12 +54,11 @@ namespace _100SquareCalc
             }
         }
 
+        public ICommand InitCommand { get; private set; }
         
         public ICommand ChangeModeCommand { get; private set; }
 
         public ICommand ShuffleTitleCommand { get; private set; }
-
-        public ICommand InitCommand { get; private set; }
 
         public ICommand CheckAnswerCommand { get; private set; }
 
@@ -77,9 +76,9 @@ namespace _100SquareCalc
             setTitleRowList();
             setTitleColumnList();
             setCalcCellList();
+            InitCommand = new DelegateCommand(initCommand);
             ChangeModeCommand = new DelegateCommand(changeModeCommand);
             ShuffleTitleCommand = new DelegateCommand(shuffleTitleCommand);
-            InitCommand = new DelegateCommand(initCommand);
             CheckAnswerCommand = new DelegateCommand(checkAnswerCommand);
         }
 
@@ -130,6 +129,17 @@ namespace _100SquareCalc
             }
         }
 
+        private void initCommand()
+        {
+            _titleRowNums = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            _titleColumnNums = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            CalcMode = EnumCalcMode.Add;
+
+            setTitleRowList();
+            setTitleColumnList();
+            setCalcCellList();
+        }
+
         private void changeModeCommand()
         {
             switch (CalcMode)
@@ -159,17 +169,6 @@ namespace _100SquareCalc
 
             setTitleRowList();
             setTitleColumnList();
-        }
-
-        private void initCommand()
-        {
-            _titleRowNums = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            _titleColumnNums = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            CalcMode = EnumCalcMode.Add;
-
-            setTitleRowList();
-            setTitleColumnList();
-            setCalcCellList();
         }
 
         private void checkAnswerCommand()
