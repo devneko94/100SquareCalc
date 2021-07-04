@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -16,7 +18,7 @@ namespace _100SquareCalc
         public int? TitleNum { get; set; }
     }
 
-    public class NormalCellData
+    public class NormalCellData : INotifyPropertyChanged
     {
         public int RowIndex { get; set; }
 
@@ -24,6 +26,22 @@ namespace _100SquareCalc
 
         public int? InputNum { get; set; }
 
-        public bool? IsCorrect { get; set; }
+        private bool? _isCorrect = null;
+        public bool? IsCorrect
+        {
+            get => _isCorrect;
+            set
+            {
+                _isCorrect = value;
+                onPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void onPropertyChanged([CallerMemberName]string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

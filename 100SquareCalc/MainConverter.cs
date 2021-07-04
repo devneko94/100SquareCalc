@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace _100SquareCalc
 {
@@ -31,21 +32,30 @@ namespace _100SquareCalc
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string strMode = (string)value;
+            throw new NotImplementedException();
+        }
+    }
 
-            switch (value)
+    public class NormalCellColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool? isCorrect = (bool?)value;
+
+            switch (isCorrect)
             {
-                case "＋":
-                    return EnumCalcMode.Add;
-                case "－":
-                    return EnumCalcMode.Sub;
-                case "×":
-                    return EnumCalcMode.Times;
-                case "÷":
-                    return EnumCalcMode.Div;
+                case true:
+                    return Brushes.LightGreen;
+                case false:
+                    return Brushes.IndianRed;
                 default:
-                    return EnumCalcMode.Add;
+                    return Brushes.Transparent;
             }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

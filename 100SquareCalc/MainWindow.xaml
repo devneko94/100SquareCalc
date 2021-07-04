@@ -12,6 +12,7 @@
     </Window.DataContext>
     <Window.Resources>
         <local:CalcModeConverter x:Key="CalcModeConverter"/>
+        <local:NormalCellColorConverter x:Key="NormalCellColorConverter"/>
     </Window.Resources>
     
     <Grid>
@@ -48,7 +49,7 @@
                     Width="80" Height="30" Content="答え合わせ"
                     Command="{Binding CheckAnswerCommand}"/>
         </Grid>
-        
+
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -162,19 +163,8 @@
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <ui:NormalCell NormalCellText="{Binding InputNum, Mode=TwoWay}">
-                            <Style TargetType="ui:NormalCell">
-                                <Setter Property="NormalCellColor" Value="Transparent"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsCorrect}" Value="true">
-                                        <Setter Property="NormalCellColor" Value="LightGreen"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding IsCorrect}" Value="false">
-                                        <Setter Property="NormalCellColor" Value="IndianRed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ui:NormalCell>
+                        <ui:NormalCell NormalCellText="{Binding InputNum, Mode=TwoWay}"
+                                       NormalCellColor="{Binding IsCorrect, Converter={StaticResource NormalCellColorConverter}}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
